@@ -1,0 +1,181 @@
+/*--------------- Main --------------------------*/
+body {
+    font-size: small !important;
+}
+
+.active {
+    background-color: #121514 !important;
+    border-radius: 5px;
+}
+
+.active .nav-link {
+    color: white !important;
+}
+
+.section {
+    margin-bottom: 15px;
+}
+
+.show-week {
+    font-size: xx-small !important;
+}
+
+.date-today.text-info {
+    color: #052c86 !important;
+    font-weight: 700;
+}
+
+.uib-button-bar {
+    display: none;
+}
+
+.uib-datepicker-popup {
+    padding-bottom: 1px !important;
+}
+
+/*---------------  Navbar --------------------------*/
+
+.searchOff {
+    display: none;
+}
+
+.searchBtn {
+    background-color: #121514 !important;
+    border-color: #121514 !important;
+}
+
+/*--------------- Contact --------------------------*/
+.allWorksPhoto {
+    height: 200px;
+    border-style: solid;
+    border-width: thin;
+    border-bottom: none;
+    background-color: #8A8A8A;
+}
+
+.allWorksName {
+    border-style: solid;
+    border-width: thin;
+    border-bottom: none;
+    border-top: none;
+    background-color: #8A8A8A;
+    height: 5%;
+}
+
+.allWorksDescription {
+    border-style: solid;
+    border-width: thin;
+    border-top: none;
+    padding-bottom: 20px;
+    padding-top: 10px;
+    height: 180px;
+}
+
+.descriptionTitle {
+    padding-bottom: 10px;
+    padding-top: 5px;
+}
+
+/*--------------- Forms --------------------------*/
+.formSection {
+    border-style: solid;
+    border-width: thin;
+    border-radius: 5px;
+    border-color: lightgrey;
+}
+
+.formContent {
+    margin: 10px 10px 10px 10px;
+}
+
+.registerButton {
+    background-color: #0b0f3c !important;
+    border-color: #0b0f3c !important;
+    width: fit-content;
+}
+
+.timeDropdown, .slotDropdown, .slotDropdown2 {
+    width: 460px;
+    height: 38px;
+    border-radius: 5px;
+    border-color: lightgrey;
+}
+
+select:required:invalid {
+    color: gray;
+}
+
+select option:invalid {
+    font-style: italic;
+    color: lightgrey;
+}
+
+option[value=""][disabled] {
+    display: none;
+}
+
+/*--------------- Timetable --------------------------*/
+.slots {
+    border-radius: 3px;
+}
+
+.availableSlot {
+    background-color: #5cb85c;
+    color: white;
+}
+
+.occupiedSlot {
+    background-color: #ac2925 !important;
+    color: white;
+}
+
+.unavailableSlot {
+    background-color: #5e5e5e;
+    font-style: italic;
+    color: white;
+}
+
+/*--------------- Footer --------------------------*/
+
+.pageFooter {
+    text-align: center;
+}
+
+/*--------------- Today's Calendar --------------------------*/
+
+.timings {
+    text-align: left;
+    padding-right: 10px;
+    width: 100px;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: white;
+    font-size: 0.7em;
+    box-sizing: border-box
+}
+
+.timings span {
+    font-size: 200%;
+    color: #696969;
+}
+
+/*--------------- Mobile style --------------------------*/
+
+@media only screen and (max-width: 1024px) {
+    .descriptionTitle {
+        margin-top: 15px;
+    }
+
+    .descriptionEmail {
+        overflow-wrap: break-word;
+    }
+
+}
+
+@media only screen and (max-width: 1023px) {
+}
+
+@media only screen and (width: 1024px) {
+}

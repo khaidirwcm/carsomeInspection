@@ -1,0 +1,305 @@
+<!doctype html>
+<html>
+<head>
+    <link href="css/style.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css?family=Raleway:400,300,600,800,900" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+          integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <script src="js/angular/angular.min.js"></script>
+    <script src="js/angular/ui-bootstrap-tpls-2.5.0.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"
+            integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"
+            integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
+            crossorigin="anonymous"></script>
+</head>
+<body ng-app="myApp" ng-controller="MainController">
+<div class="main">
+    <div class="container">
+
+        <!--Navbar-->
+        <div class="row">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light col-md-12">
+                <a class="navbar-brand" href="#"><img src="img/carsomeLogo.png"></a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse"
+                        data-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item" ng-class="{active : homeMenu}" ng-click="toggleActive('homeMenu')">
+                            <a class="nav-link" href="#"><strong>HOME</strong></a>
+                        </li>
+                        <li class="nav-item" ng-class="{active : formMenu}" ng-click="toggleActive('formMenu')">
+                            <a class="nav-link" href="#inspectionForm"><strong>FORM</strong></a>
+                        </li>
+                        <li class="nav-item" ng-class="{active : tableMenu}" ng-click="toggleActive('tableMenu')">
+                            <a class="nav-link" href="#inspectionTable"><strong>INSPECTION TABLE</strong></a>
+                        </li>
+                        <li class="nav-item" ng-class="{active : contactMenu}" ng-click="toggleActive('contactMenu')">
+                            <a class="nav-link" href="#contactDiv"><strong>CONTACT</strong></a>
+                        </li>
+                        <li class="nav-item" ng-click="toggleSearch()">
+                            <a class="nav-link" href="#"><img src="img/search.png"></a>
+                        </li>
+                    </ul>
+                    <div ng-class="{'searchOff': !searchFunctionOff}">
+                        <form class="form-inline my-2 my-lg-0">
+                            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                            <button class="btn btn-success searchBtn my-2 my-sm-0" type="submit">Search</button>
+                        </form>
+                    </div>
+                </div>
+            </nav>
+        </div>
+
+        <!--Inspection form-->
+        <div class="col-md-12 section" id="inspectionForm" style="margin-top: 15px;">
+            <h2>Inspection form</h2>
+            <div ng-if="moreThanThreeWeeks" class="alert alert-warning fade show" role="alert">
+                Reservation can only be made within the next 3 weeks!
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div ng-if="slotIsTaken" class="alert alert-danger fade show" role="alert">
+                Selected slot is taken. Please select another slot.
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div ng-if="reservedSuccess" class="alert alert-success fade show" role="alert">
+                Successfully reserved a slot!
+                <button type="button" class="close" ng-click="toggleReservedSuccess()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="formSection">
+                <form class="formContent">
+                    <div class="container">
+                        <div class="row">
+                            <div class="form-group col-md-3" style="padding: 5px;">
+                                <input type="text" class="form-control" id="clientName" aria-describedby="nameHelp"
+                                       ng-model="formName" ng-class="invalidFieldFn(formName)"
+                                       placeholder="Name">
+                            </div>
+                            <div class="form-group col-md-3" style="padding: 5px;">
+                                <input type="tel" class="form-control" id="clientTelephone"
+                                       aria-describedby="telephoneHelp" ng-class="invalidFieldFn(formTelephone)"
+                                       ng-model="formTelephone" pattern="[0-9]{3}[0-9]{3}[0-9]{4}"
+                                       placeholder="Telephone Number">
+                                <small>Format: 0123456789</small>
+                            </div>
+                            <div class="form-group col-md-3" style="padding: 5px;">
+                                <input type="text" class="form-control" id="plateNumber" aria-describedby="plateHelp"
+                                       ng-model="formPlate"
+                                       placeholder="Plate Number">
+                            </div>
+                            <div class="form-group col-md-3" style="padding: 5px;">
+                                <p class="input-group">
+                                    <input type="text" class="form-control" uib-datepicker-popup="{{format}}"
+                                           ng-model="formDate" ng-class="invalidFieldFn(formDate)"
+                                           is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true"
+                                           close-text="Close" alt-input-formats="altInputFormats"
+                                           placeholder="Inspection Date"/>
+                                    <span class="input-group-btn">
+                                    <button type="button" class="btn btn-default"
+                                            ng-click="openCalendar()"><i class="fa fa-calendar" aria-hidden="true"></i></button>
+                                </span>
+                                </p>
+                            </div>
+                            <div class="form-group col-md-3" style="padding: 5px;">
+                                <select class="formControl timeDropdown col-md-12"
+                                        ng-options="x for x in inspectionTime"
+                                        ng-model="selectedOptionTime">
+                                    <option value="" disabled selected>Please select the time...</option>
+                                    <option value="" disabled selected>{{x}}</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-3" ng-show="!isSaturday(formDate)" style="padding: 5px;">
+                                <select class="formControl slotDropdown col-md-12"
+                                        ng-options="x for x in inspectionSlotWeekdays.singleSlotNumber"
+                                        ng-model="selectedOptionSlot">
+                                    <option value="" disabled selected>Please select one slot...</option>
+                                    <option value="" disabled selected>{{x}}</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-3" ng-show="isSaturday(formDate)" style="padding: 5px;">
+                                <select class="formControl slotDropdown2 col-md-12"
+                                        ng-options="x for x in inspectionSlotWeekends.singleSlotNumber"
+                                        ng-model="selectedOption">
+                                    <option value="" disabled selected>Please select one slot...</option>
+                                    <option value="" disabled selected>{{x}}</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-3" style="padding: 5px;">
+                                <button type="submit" class="btn btn-success registerButton"
+                                        ng-click="reserveInspectionSlot()">
+                                    RESERVE A SLOT
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!--Timetable-->
+        <div class="col-md-12 section" id="inspectionTable" style="margin-top: 10px;">
+            <div class="container" style="padding: 20px;">
+                <h3><u>{{formDate | date: "EEEE - d/M/yyyy"}}</u></h3>
+                <div ng-if="isSunday(formDate) || !formDate">No inspection slot is available <span ng-if="formDate"> on {{formDate | date: "EEEE"}}</span>
+                </div>
+                <div ng-if="!isSunday(formDate) && formDate" class="row">
+                    <div class="col-md-5">
+                        <div class="col-md-12" ng-repeat="time in leftTime" style="padding: 5px;">
+                            <div style="width: 400px">
+                                <h5 class="col" style="width: 200px;">{{time}}</h5>
+                                <span class="col slots" ng-class="checkSlotValidity(1, time);"
+                                      style="border:solid black 1px ">1</span>
+                                <span class="col slots" ng-class="checkSlotValidity(2, time)"
+                                      style="border:solid black 1px ">2</span>
+                                <span class="col slots" ng-class="checkSlotValidity(3, time)"
+                                      style="border:solid black 1px ">3</span>
+                                <span class="col slots" ng-class="checkSlotValidity(4, time)"
+                                      style="border:solid black 1px ">4</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="col-md-12" ng-repeat="time in rightTime" style="padding: 5px;">
+                            <div style="width: 400px">
+                                <h5 class="col" style="width: 200px;">{{time}}</h5>
+                                <span class="col slots" ng-class="checkSlotValidity(1, time)"
+                                      style="border:solid black 1px ">1</span>
+                                <span class="col slots" ng-class="checkSlotValidity(2, time)"
+                                      style="border:solid black 1px ">2</span>
+                                <span class="col slots" ng-class="checkSlotValidity(3, time)"
+                                      style="border:solid black 1px ">3</span>
+                                <span class="col slots" ng-class="checkSlotValidity(4, time)"
+                                      style="border:solid black 1px ">4</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2" style="height: 100px;">
+                        <div style="background-color: #5cb85c;border: solid black 1px;height: 20px;width: 20px;"></div>
+                        <span>Available slot</span>
+                        <div style="background-color: #ac2925;border: solid black 1px;height: 20px;width: 20px;"></div>
+                        <span>Reserved slot</span>
+                        <div style="background-color: #5e5e5e;border: solid black 1px;height: 20px;width: 20px;"></div>
+                        <span>Unavailable slot</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--Contact-->
+        <div class="col-md-12 section" id="contactDiv"
+             style="text-align: center; background-color: #383838; color: white;margin-top: 15px;">
+            <div class="container" style="padding: 50px;">
+                <div class="row">
+                    <div class="col-3">
+                        <div class="col-12 allWorksPhoto"></div>
+                        <div class="col-12 allWorksName">
+                            <button>For queries / feedback:</button>
+                        </div>
+                        <div class="col-12 allWorksDescription">
+                            <div class="col-md-12 descriptionTitle">
+                                <span style="border-bottom: solid thin">General Queries</span>
+                            </div>
+                            <div class="descriptionEmail">
+                                <i class="fas fa-envelope" style="margin-right: 5px"></i>
+                                info@carsome.my <br>
+                                Carsome Sdn Bhd (1101954-M)
+                                D-3A-8 Parklane Commercial Hub,
+                                Jalan SS7/26. Kelana Jaya,
+                                47301 Petaling Jaya, Selangor, Malaysia
+                            </div>
+                            <div class="descriptionEmail">
+                                <i class="fas fa-phone" style="margin-right: 5px"></i>
+                                1-800-82-3388
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="col-12 allWorksPhoto"></div>
+                        <div class="col-12 allWorksName">
+                            <button>Carsome HQ</button>
+                        </div>
+                        <div class="col-12 allWorksDescription">
+                            <div class="col-md-12 descriptionTitle">
+                                <span style="border-bottom: solid thin">HQ Office</span>
+                            </div>
+                            <div class="descriptionEmail">
+                                <i class="fas fa-envelope" style="margin-right: 5px"></i>
+                                Level 9, KYM Tower,
+                                No 8, Jalan PJU 7/6,
+                                Mutiara Damansara,
+                                47800 Petaling Jaya, Selangor, Malaysia
+                            </div>
+                            <div class="descriptionEmail">
+                                <i class="fas fa-phone" style="margin-right: 5px"></i>
+                                +603 2330 1515
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="col-12 allWorksPhoto"></div>
+                        <div class="col-12 allWorksName">
+                            <button>Marketing</button>
+                        </div>
+                        <div class="col-12 allWorksDescription">
+                            <div class="col-md-12 descriptionTitle">
+                                <span style="border-bottom: solid thin">For collaborations / partnerships:</span>
+                            </div>
+                            <div class="descriptionEmail">
+                                <i class="fas fa-envelope" style="margin-right: 5px"></i>
+                                partnership@carsome.my
+                            </div>
+                            <div class="descriptionEmail">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="col-12 allWorksPhoto"></div>
+                        <div class="col-12 allWorksName">
+                            <button>Dealerships</button>
+                        </div>
+                        <div class="col-12 allWorksDescription">
+                            <div class="col-md-12 descriptionTitle">
+                                <span style="border-bottom: solid thin">For dealership opportunities:</span>
+                            </div>
+                            <div class="descriptionEmail">
+                                <i class="fas fa-envelope" style="margin-right: 5px"></i>
+                                info@carsome.my
+                            </div>
+                            <div class="descriptionEmail">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Footer-->
+<div class="footer-copyright text-center py-3 pageFooter">
+    Copyright © Carsome Malaysia
+</div>
+
+<!-- Modules -->
+<script src="js/app.js"></script>
+
+<!-- Controllers -->
+<script src="js/controllers/MainController.js"></script>
+</body>
+</html>
